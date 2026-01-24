@@ -52,7 +52,10 @@ const readableFont = '"Lora", Georgia, serif'
 function App() {
   const [raveMode, setRaveMode] = useState(false)
   const [showConfetti, setShowConfetti] = useState(false)
-  const [theme, setTheme] = useState('burgundy')
+  const [theme, setTheme] = useState(() => {
+    const saved = localStorage.getItem('theme')
+    return saved || 'burgundy'
+  })
   const [darkMode, setDarkMode] = useState(() => {
     const saved = localStorage.getItem('darkMode')
     return saved ? JSON.parse(saved) : false
@@ -60,10 +63,14 @@ function App() {
   const [invitationFont, setInvitationFont] = useState('pinyon')
   const location = useLocation()
 
-  // Save dark mode preference
+  // Save preferences
   useEffect(() => {
     localStorage.setItem('darkMode', JSON.stringify(darkMode))
   }, [darkMode])
+
+  useEffect(() => {
+    localStorage.setItem('theme', theme)
+  }, [theme])
 
   // Secret keyboard shortcut: press 'r' 'a' 'v' 'e' in sequence
   useEffect(() => {
