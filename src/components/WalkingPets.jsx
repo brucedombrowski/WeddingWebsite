@@ -369,18 +369,18 @@ function WalkingCat({ dogPosition, isSleeping, onSettle }) {
           <rect x={legs.backRight.x} y={legs.backRight.y} width="3" height={isSitting ? 4 : 6} rx="1" />
           <rect x={legs.frontLeft.x} y={legs.frontLeft.y} width="3" height={isSitting ? 4 : 6} rx="1" />
           <rect x={legs.frontRight.x} y={legs.frontRight.y} width="3" height={isSitting ? 4 : 6} rx="1" />
-          {/* Eyes - HUGE when scared */}
+          {/* Eyes - HUGE when scared, yellow normally */}
           <circle
             cx="35"
             cy={isSitting ? 19 : 21}
             r={furPuffed ? 3 : (isJumping ? 2 : 1.5)}
-            fill={furPuffed ? "#ffff00" : "#22c55e"}
+            fill="#eab308"
           />
           <circle
             cx="41"
             cy={isSitting ? 19 : 21}
             r={furPuffed ? 3 : (isJumping ? 2 : 1.5)}
-            fill={furPuffed ? "#ffff00" : "#22c55e"}
+            fill="#eab308"
           />
           {/* Pupils - tiny when scared */}
           <circle cx="35.5" cy={isSitting ? 19 : 21} r={furPuffed ? 1 : 0.5} fill="#000" />
@@ -615,9 +615,9 @@ function WalkingLabradoodle({ onPositionChange, isSleeping, onSettle }) {
         <ellipse cx="48" cy="28" rx="5" ry="10" fill={merleColors.patches} />
         <ellipse cx="58" cy="14" rx="4" ry="6" fill={merleColors.patches} />
 
-        {/* Eyes */}
-        <circle cx="52" cy="22" r="2" fill="#4a3728" />
-        <circle cx="58" cy="22" r="2" fill="#4a3728" />
+        {/* Eyes - Luna has blue eyes */}
+        <circle cx="52" cy="22" r="2" fill="#3b82f6" />
+        <circle cx="58" cy="22" r="2" fill="#3b82f6" />
         <circle cx="52.5" cy="21.5" r="0.8" fill="white" />
         <circle cx="58.5" cy="21.5" r="0.8" fill="white" />
 
