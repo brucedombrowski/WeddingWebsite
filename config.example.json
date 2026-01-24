@@ -1,0 +1,36 @@
+{
+  "site": {
+    "title": "Our Wedding",
+    "domain": ""
+  },
+  "hosting": {
+    "provider": "",
+    "url": ""
+  },
+  "wedding": {
+    "bride": {
+      "firstName": "Jane",
+      "lastName": "Doe"
+    },
+    "groom": {
+      "firstName": "John",
+      "lastName": "Smith"
+    },
+    "date": "2026-06-15",
+    "time": "4:00 PM",
+    "venue": {
+      "ceremony": {
+        "name": "Venue Name",
+        "address": "123 Main St, City, State 12345"
+      },
+      "reception": {
+        "name": "Reception Hall",
+        "address": "456 Oak Ave, City, State 12345"
+      }
+    }
+  },
+  "registry": [],
+  "contact": {
+    "email": "wedding@example.com"
+  }
+}
