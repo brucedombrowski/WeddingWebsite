@@ -3,11 +3,26 @@ node_modules/
 
 # Build output
 dist/
+build/
 
 # Local env files
 .env
 .env.local
-.env.*.local
+.env.development.local
+.env.test.local
+.env.production.local
+.env*.local
+
+# Firebase
+.firebase/
+firebase-debug.log
+firebase-debug.*.log
+.firebaserc.backup
+firestore-debug.log
+ui-debug.log
+
+# Firebase config with credentials (use template)
+src/firebase/config.js
 
 # Config with personal details
 config.json
@@ -18,14 +33,62 @@ config.json
 *.swp
 *.swo
 *~
+*.sublime-workspace
+*.sublime-project
 
 # OS files
 .DS_Store
+.DS_Store?
+._*
 Thumbs.db
+ehthumbs.db
+Desktop.ini
 
 # Logs
 *.log
 npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
 
 # PWA generated files
 dev-dist/
+
+# Testing
+coverage/
+.nyc_output/
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.temp
+
+# Sensitive/PII files
+**/secrets/
+**/credentials/
+*.pem
+*.key
+*.cert
+*.p12
+*_rsa
+*_dsa
+*_ed25519
+*_ecdsa
+*.ppk
+
+# Backup files
+*.bak
+*.backup
+*.old
+
+# Photos (contain personal images)
+public/photos/
+public/preview.jpg
+
+# Session/cache files
+.cache/
+*.cache
+
+# Claude/AI session files (may contain sensitive conversation data)
+.claude/

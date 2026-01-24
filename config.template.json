@@ -1,0 +1,37 @@
+{
+  "site": {
+    "title": "Partner1 & Partner2's Wedding",
+    "domain": ""
+  },
+  "hosting": {
+    "provider": "Firebase",
+    "url": "https://your-project.web.app",
+    "tinyUrl": ""
+  },
+  "wedding": {
+    "bride": {
+      "firstName": "Partner1",
+      "lastName": "LastName1"
+    },
+    "groom": {
+      "firstName": "Partner2",
+      "lastName": "LastName2"
+    },
+    "date": "YYYY-MM-DD",
+    "time": "TBD",
+    "venue": {
+      "ceremony": {
+        "name": "Venue Name",
+        "address": "123 Street, City, State ZIP"
+      },
+      "reception": {
+        "name": "Venue Name",
+        "address": "123 Street, City, State ZIP"
+      }
+    }
+  },
+  "registry": [],
+  "contact": {
+    "email": "your-email@example.com"
+  }
+}

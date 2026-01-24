@@ -1,32 +1,53 @@
-# Wedding Website
+# Bride & Groom's Wedding Website
 
-A personal wedding website to share event details and collect RSVPs from guests. Built as a Progressive Web App (PWA) for both web and iOS home screen installation.
+A personal wedding website for Bride Lastname & Groom Lastname's wedding on November 6, 2026 at Wedding Venue Name in City, Texas.
+
+## Live Site
+
+- **URL:** https://your-wedding.web.app
+- **Short URL:** https://your-short-url
 
 ## Project Status
 
-**Status:** Development
+**Status:** Live / Active Development
 
 ## Tech Stack
 
 - **Framework:** React 18 with Vite
-- **Styling:** Tailwind CSS
+- **Styling:** Tailwind CSS with custom color themes
 - **Routing:** React Router DOM
+- **Backend:** Firebase (Authentication, Firestore, Hosting)
 - **PWA:** vite-plugin-pwa
 
 ## Features
 
+### Pages
+- **Home** - Elegant paper invitation style with countdown
+- **Our Story** - Interactive timeline, fun facts, pet profiles, draggable photo gallery
+- **Wedding Party** - Bridesmaids, groomsmen, and their roles
+- **Details** - Ceremony and reception information with maps
+- **Reception** - Song request system with iTunes search integration
+- **RSVP** - Guest RSVP form
+- **Feedback** - Voice-to-text feedback submission for wedding planning
+- **Admin** - Dashboard, guest management, song requests, Our Story editor
+
+### Technical Features
 - Responsive design (mobile-first)
-- Countdown timer to wedding date
-- Event details with Google Maps links
-- RSVP form
-- PWA support (installable on iOS)
+- Multiple color themes (Burgundy, Olive, Fall, Midnight, Rose, Forest)
+- Firebase Authentication (Google OAuth)
+- Role-based access control (Admin, MOH, MOB, MOG, Wedding Party, Guest)
+- Real-time data sync with Firestore
+- PWA support (installable on iOS/Android)
+- Animated elements (walking pets, confetti, floating hearts)
+- Social media link previews (Open Graph)
 
 ## Getting Started
 
 ### Prerequisites
 
 - Node.js 18+
-- npm or yarn
+- npm
+- Firebase CLI (`npm install -g firebase-tools`)
 
 ### Installation
 
@@ -46,54 +67,112 @@ npm run dev
 npm run build
 ```
 
-### Preview Production Build
+### Deploy to Firebase
 
 ```bash
-npm run preview
+firebase login
+npm run build
+firebase deploy --only hosting
 ```
 
 ## Configuration
 
-Edit `config.json` to customize:
+### config.json
+Wedding details, venue information, and site settings.
 
-- Couple names (bride & groom)
-- Wedding date and time
-- Venue information
-- Contact email
+### src/firebase/config.js
+Firebase project credentials (API keys, project ID, etc.)
 
-## Documentation
-
-- [Requirements](Requirements.md) - Feature requirements and specifications
-- [Agents](Agents.md) - Project contributors and task history
+### Admin Emails
+Auto-promoted to admin role on first login:
+- REDACTED_GROOM_EMAIL
+- REDACTED_BRIDE_EMAIL
 
 ## Project Structure
 
 ```
-├── config.json          # Site configuration
-├── public/              # Static assets
+├── config.json              # Wedding configuration
+├── firebase.json            # Firebase hosting config
+├── .firebaserc              # Firebase project link
+├── public/
+│   ├── photos/              # Wedding photos
+│   ├── preview.jpg          # Social media preview image
+│   └── icons/               # PWA icons
 ├── src/
-│   ├── components/      # Reusable components
-│   │   ├── Countdown.jsx
-│   │   └── Navbar.jsx
-│   ├── pages/           # Page components
-│   │   ├── Details.jsx
-│   │   ├── Home.jsx
-│   │   └── RSVP.jsx
-│   ├── App.jsx          # Main app component
-│   ├── config.js        # Config helpers
-│   ├── index.css        # Global styles
-│   └── main.jsx         # Entry point
+│   ├── components/
+│   │   ├── Navbar.jsx       # Navigation with mini countdown
+│   │   ├── Countdown.jsx    # Wedding countdown timer
+│   │   ├── Confetti.jsx     # Celebration confetti effect
+│   │   └── WalkingPets.jsx  # Animated dog and cat
+│   ├── pages/
+│   │   ├── Home.jsx         # Paper invitation style home
+│   │   ├── OurStory.jsx     # Timeline and photo gallery
+│   │   ├── WeddingParty.jsx # Wedding party members
+│   │   ├── Details.jsx      # Event details
+│   │   ├── Reception.jsx    # Song requests
+│   │   ├── RSVP.jsx         # RSVP form
+│   │   ├── Feedback.jsx     # Feedback submission
+│   │   ├── Login.jsx        # Authentication
+│   │   └── Admin.jsx        # Admin dashboard
+│   ├── firebase/
+│   │   ├── config.js        # Firebase initialization
+│   │   ├── AuthContext.jsx  # Authentication context
+│   │   ├── useGuests.js     # Guest data hook
+│   │   ├── useSongs.js      # Song request hook
+│   │   └── useSiteSettings.js # Site settings hook
+│   ├── App.jsx
+│   ├── config.js            # Config helpers
+│   ├── index.css            # Tailwind + custom styles
+│   └── main.jsx
 ├── index.html
 ├── package.json
 ├── tailwind.config.js
 └── vite.config.js
 ```
 
-## PWA / iOS App
+## Admin Features
 
-This site is a Progressive Web App. On iOS:
+Access at `/admin` after logging in with an admin email:
 
+- **Dashboard** - RSVP stats, quick overview
+- **Our Story** - Edit timeline, fun facts, toggle date visibility
+- **Feedback** - View and manage feedback submissions
+- **Guest List** - Add, edit, delete guests
+- **User Management** - Assign roles to users
+- **Song Requests** - View and manage song requests
+- **RSVPs** - View and update RSVP statuses
+
+## PWA / Mobile App
+
+This site is a Progressive Web App:
+
+### iOS
 1. Open the site in Safari
 2. Tap the Share button
 3. Select "Add to Home Screen"
-4. The app will appear on your home screen with full-screen support
+
+### Android
+1. Open the site in Chrome
+2. Tap the menu (three dots)
+3. Select "Add to Home Screen"
+
+## Documentation
+
+- [Requirements](Requirements.md) - Feature requirements and specifications
+- [Changelog](CHANGELOG.md) - Version history and changes
+- [Architecture](ARCHITECTURE.md) - Technical solutions and design decisions
+- [Agents](Agents.md) - Task history and contributors
+
+## Setup for New Clone
+
+Since sensitive files are gitignored, after cloning:
+
+1. Copy template files:
+   ```bash
+   cp config.template.json config.json
+   cp src/firebase/config.template.js src/firebase/config.js
+   ```
+
+2. Fill in your values (Firebase credentials, wedding details, venue addresses)
+
+3. Add photos to `public/photos/` and `public/preview.jpg`

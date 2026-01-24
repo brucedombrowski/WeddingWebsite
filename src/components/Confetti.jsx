@@ -34,7 +34,7 @@ function Confetti({ active }) {
       {particles.map((p) => (
         <div
           key={p.id}
-          className="absolute animate-confetti"
+          className="absolute"
           style={{
             left: `${p.x}%`,
             top: '-20px',
@@ -42,7 +42,7 @@ function Confetti({ active }) {
             height: p.size * 0.6,
             backgroundColor: p.color,
             transform: `rotate(${p.rotation}deg)`,
-            animation: `confetti-fall ${p.duration}s ease-in-out ${p.delay}s infinite`,
+            animation: `confetti-fall ${p.duration}s ease-in-out ${p.delay}s forwards`,
           }}
         />
       ))}

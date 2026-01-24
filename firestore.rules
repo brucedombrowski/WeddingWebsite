@@ -1,0 +1,75 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Helper function to check if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    // Helper function to get user's role from their user document
+    function getUserRole() {
+      return get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role;
+    }
+
+    // Helper function to check if user is bride or groom (full admin)
+    function isBrideOrGroom() {
+      return isAuthenticated() && getUserRole() in ['bride', 'groom'];
+    }
+
+    // Helper function to check if user has admin-level access
+    function isAdmin() {
+      return isAuthenticated() && getUserRole() in ['bride', 'groom', 'moh', 'best_man', 'mob'];
+    }
+
+    // Helper function to check if user can view RSVPs
+    function canViewRSVPs() {
+      return isAuthenticated() && getUserRole() in ['bride', 'groom', 'moh', 'best_man', 'mob', 'mog', 'fob', 'fog', 'family'];
+    }
+
+    // Users collection - users can read/write their own doc, admins can read all
+    match /users/{userId} {
+      allow read: if isAuthenticated() && (request.auth.uid == userId || isAdmin());
+      allow create: if isAuthenticated() && request.auth.uid == userId;
+      allow update: if isAuthenticated() && (request.auth.uid == userId || isBrideOrGroom());
+      allow delete: if isBrideOrGroom();
+    }
+
+    // Guests collection - PII data, restricted access
+    match /guests/{guestId} {
+      allow read: if canViewRSVPs();
+      allow write: if isAdmin();
+    }
+
+    // Songs collection - anyone authenticated can read, admins can write
+    match /songs/{songId} {
+      allow read: if true; // Public playlist
+      allow create: if true; // Anyone can request a song
+      allow update, delete: if isAdmin();
+    }
+
+    // Feedback collection - anyone can create, only admins can read/delete
+    match /feedback/{feedbackId} {
+      allow create: if true; // Anonymous feedback allowed
+      allow read, delete: if isAdmin();
+      allow update: if false; // No editing feedback
+    }
+
+    // Site settings - anyone can read, only bride/groom can write
+    match /settings/{settingId} {
+      allow read: if true;
+      allow write: if isBrideOrGroom();
+    }
+
+    // Wedding party - anyone can read, admins can write
+    match /weddingParty/{memberId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // Default deny all other access
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}
