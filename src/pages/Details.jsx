@@ -11,7 +11,7 @@ function Details() {
 
         {/* Date & Time */}
         <section className="text-center mb-16">
-          <p className="text-2xl font-serif text-accent-800">
+          <p className="text-2xl text-accent-800">
             {getWeddingDate()}
           </p>
           <p className="text-lg text-accent-600 mt-2">
@@ -21,7 +21,7 @@ function Details() {
 
         {/* Venue */}
         <section className="text-center mb-16">
-          <h2 className="text-2xl font-serif text-accent-800 mb-4">
+          <h2 className="text-2xl text-accent-800 mb-4">
             Ceremony &amp; Reception
           </h2>
           <div className="bg-accent-50 rounded-lg p-8 max-w-md mx-auto border border-accent-200 mb-8">
@@ -43,6 +43,50 @@ function Details() {
             </a>
           </div>
 
+          {/* Venue Gallery */}
+          <div className="max-w-5xl mx-auto mb-12">
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              <div className="rounded-xl overflow-hidden shadow-lg border border-accent-200 card-lift">
+                <img
+                  src="https://thestablesonthebrazos.com/wp-content/uploads/2024/12/Baros-Sneak-Peek-60.jpg"
+                  alt="The Stables on the Brazos venue"
+                  className="w-full h-48 object-cover"
+                />
+              </div>
+              <div className="rounded-xl overflow-hidden shadow-lg border border-accent-200 card-lift">
+                <img
+                  src="https://thestablesonthebrazos.com/wp-content/uploads/2024/12/Baros-Sneak-Peek-172.jpg"
+                  alt="Beautiful venue setting"
+                  className="w-full h-48 object-cover"
+                />
+              </div>
+              <div className="rounded-xl overflow-hidden shadow-lg border border-accent-200 card-lift">
+                <img
+                  src="https://thestablesonthebrazos.com/wp-content/uploads/2024/11/Baros-Sneak-Peek-27.jpg"
+                  alt="The Stables venue exterior"
+                  className="w-full h-48 object-cover"
+                />
+              </div>
+            </div>
+            {/* Featured images */}
+            <div className="mt-4 grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div className="rounded-xl overflow-hidden shadow-lg border border-accent-200 card-lift">
+                <img
+                  src="https://thestablesonthebrazos.com/wp-content/uploads/2024/11/TheStables_PearandGrace009.jpg"
+                  alt="The Stables on the Brazos"
+                  className="w-full h-72 object-cover"
+                />
+              </div>
+              <div className="rounded-xl overflow-hidden shadow-lg border border-accent-200 card-lift">
+                <img
+                  src="https://thestablesonthebrazos.com/wp-content/uploads/2024/11/TheStables_PearandGrace113.jpg"
+                  alt="The Stables venue interior"
+                  className="w-full h-72 object-cover"
+                />
+              </div>
+            </div>
+          </div>
+
           {/* Venue Map */}
           <div className="max-w-3xl mx-auto rounded-xl overflow-hidden shadow-lg border border-accent-200">
             <img
@@ -55,7 +99,7 @@ function Details() {
 
         {/* Schedule */}
         <section className="mt-16">
-          <h2 className="text-2xl font-serif text-accent-800 mb-8 text-center">
+          <h2 className="text-2xl text-accent-800 mb-8 text-center">
             Schedule
           </h2>
           <div className="max-w-md mx-auto space-y-4">

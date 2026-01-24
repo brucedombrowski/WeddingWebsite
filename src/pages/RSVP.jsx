@@ -41,7 +41,7 @@ function RSVP() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
             </svg>
           </div>
-          <h1 className="text-4xl font-serif text-accent-800 mb-4">
+          <h1 className="text-4xl text-accent-800 mb-4">
             Thank You!
           </h1>
           <p className="text-accent-600 text-lg mb-8">
@@ -65,7 +65,7 @@ function RSVP() {
       <div className="max-w-2xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12">
-          <h1 className="text-5xl font-serif text-accent-800 mb-4">RSVP</h1>
+          <h1 className="text-5xl text-accent-800 mb-4">RSVP</h1>
           <p className="text-accent-600 text-lg">
             We would be honored to have you join us on our special day.
           </p>
