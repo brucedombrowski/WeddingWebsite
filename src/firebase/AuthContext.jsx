@@ -68,11 +68,14 @@ export const PERMISSIONS = {
 }
 
 // Designated accounts - these get auto-assigned roles
-const DESIGNATED_ACCOUNTS = {
-  'wedding@example.com': ROLES.BRIDE,
-  'REDACTED_GROOM_EMAIL': ROLES.GROOM,
-  'REDACTED_BRIDE_EMAIL': ROLES.BRIDE  // Backup bride account
-}
+// Emails are loaded from environment variables to keep PII out of repo
+const DESIGNATED_ACCOUNTS = Object.fromEntries(
+  [
+    [import.meta.env.VITE_WEDDING_EMAIL, ROLES.BRIDE],
+    [import.meta.env.VITE_GROOM_EMAIL, ROLES.GROOM],
+    [import.meta.env.VITE_BRIDE_EMAIL, ROLES.BRIDE]
+  ].filter(([email]) => email) // Filter out undefined entries
+)
 
 export function AuthProvider({ children }) {
   const [user, setUser] = useState(null)

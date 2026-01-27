@@ -84,9 +84,12 @@ Wedding details, venue information, and site settings.
 Firebase project credentials (API keys, project ID, etc.)
 
 ### Admin Emails
-Auto-promoted to admin role on first login:
-- REDACTED_GROOM_EMAIL
-- REDACTED_BRIDE_EMAIL
+Auto-promoted to admin role on first login. Configure in `.env` file:
+- `VITE_WEDDING_EMAIL` - Wedding contact email (Bride role)
+- `VITE_GROOM_EMAIL` - Groom's email
+- `VITE_BRIDE_EMAIL` - Bride's email
+
+See `.env.template` for setup.
 
 ## Project Structure
 

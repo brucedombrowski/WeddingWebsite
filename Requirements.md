@@ -115,7 +115,7 @@ Wedding website for Bride Lastname & Groom Lastname - November 6, 2026 at Weddin
 - RSVP status updates
 
 ## Notes
-- Admin emails auto-promoted: REDACTED_GROOM_EMAIL, REDACTED_BRIDE_EMAIL
+- Admin emails configured via environment variables (see `.env.template`)
 - Configuration stored in `config.json` and Firebase
 - Site settings can be edited via Admin panel
 - Dates on timeline can be toggled on/off via Admin
