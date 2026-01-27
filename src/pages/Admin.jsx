@@ -1322,7 +1322,10 @@ function Admin() {
     <div className="py-8 px-4 bg-gradient-to-b from-accent-50 to-white min-h-screen">
       <div className="max-w-6xl mx-auto">
         <div className="flex items-center justify-between mb-8">
-          <h1 className="text-3xl font-bold text-accent-800">Admin Panel</h1>
+          <div>
+            <h1 className="text-3xl font-bold text-accent-800">Admin Panel</h1>
+            <p className="text-xs text-accent-400 mt-1">v{__APP_VERSION__}</p>
+          </div>
           <div className="flex items-center gap-3">
             {user.photoURL && (
               <img src={user.photoURL} alt="" className="w-10 h-10 rounded-full" />
