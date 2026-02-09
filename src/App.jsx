@@ -1,182 +1,196 @@
-import { useState, useEffect } from 'react'
-import { Routes, Route, useLocation } from 'react-router-dom'
-import Navbar from './components/Navbar'
-import Home from './pages/Home'
-import Details from './pages/Details'
-import RSVP from './pages/RSVP'
-import OurStory from './pages/OurStory'
-import WeddingParty from './pages/WeddingParty'
-import FatherOfBride from './pages/FatherOfBride'
-import Reception from './pages/Reception'
-import Login from './pages/Login'
-import Admin from './pages/Admin'
-import Feedback from './pages/Feedback'
-import Confetti from './components/Confetti'
-import ParticleBackground from './components/ParticleBackground'
-import WalkingPets from './components/WalkingPets'
-import { Lasers, PartyAudio } from './components/RaveEffects'
-import { AuthProvider } from './firebase/AuthContext'
+// SAVE THE DATE ONLY - temporary landing page
+// When ready for the full site, restore this file from git:
+//   git checkout HEAD~1 -- src/App.jsx
 
-const themes = ['burgundy', 'olive', 'fall', 'midnight', 'rose', 'forest']
-const themeLabels = {
-  burgundy: '🍷 Burgundy',
-  olive: '🌿 Olive',
-  fall: '🍂 Fall',
-  midnight: '🌙 Midnight',
-  rose: '🌸 Rose Gold',
-  forest: '🌲 Forest'
+const EVENT = {
+  title: "Bride & Groom's Wedding",
+  date: '2026-11-06',
+  startTime: '17:00',
+  endTime: '23:00',
+  location: 'Wedding Venue Name, 123 Venue St, City, TX 12345',
+  description: 'Wedding celebration of Bride Lastname & Groom Lastname',
 }
 
-// Calligraphy fonts for home page (save the date / invitation style)
-const invitationFonts = ['pinyon', 'petit', 'ephesis', 'gwendolyn', 'cinzel', 'cormorant']
-const fontLabels = {
-  cormorant: 'Cormorant',
-  cinzel: 'Cinzel',
-  pinyon: 'Pinyon Script',
-  petit: 'Petit Formal',
-  ephesis: 'Ephesis',
-  gwendolyn: 'Gwendolyn'
-}
-const fontFamilies = {
-  cormorant: '"Cormorant", serif',
-  cinzel: '"Cinzel Decorative", serif',
-  pinyon: '"Pinyon Script", cursive',
-  petit: '"Petit Formal Script", cursive',
-  ephesis: '"Ephesis", cursive',
-  gwendolyn: '"Gwendolyn", cursive'
+function googleCalendarUrl() {
+  const start = EVENT.date.replace(/-/g, '') + 'T' + EVENT.startTime.replace(':', '') + '00'
+  const end = EVENT.date.replace(/-/g, '') + 'T' + EVENT.endTime.replace(':', '') + '00'
+  const params = new URLSearchParams({
+    action: 'TEMPLATE',
+    text: EVENT.title,
+    dates: `${start}/${end}`,
+    location: EVENT.location,
+    details: EVENT.description,
+  })
+  return `https://calendar.google.com/calendar/render?${params}`
 }
 
-// Readable font for rest of site
-const readableFont = '"Lora", Georgia, serif'
+function outlookCalendarUrl() {
+  const params = new URLSearchParams({
+    path: '/calendar/action/compose',
+    rru: 'addevent',
+    subject: EVENT.title,
+    startdt: `${EVENT.date}T${EVENT.startTime}:00`,
+    enddt: `${EVENT.date}T${EVENT.endTime}:00`,
+    location: EVENT.location,
+    body: EVENT.description,
+  })
+  return `https://outlook.live.com/calendar/0/deeplink/compose?${params}`
+}
+
+function generateIcsContent() {
+  const start = EVENT.date.replace(/-/g, '') + 'T' + EVENT.startTime.replace(':', '') + '00'
+  const end = EVENT.date.replace(/-/g, '') + 'T' + EVENT.endTime.replace(':', '') + '00'
+  return [
+    'BEGIN:VCALENDAR',
+    'VERSION:2.0',
+    'BEGIN:VEVENT',
+    `DTSTART:${start}`,
+    `DTEND:${end}`,
+    `SUMMARY:${EVENT.title}`,
+    `LOCATION:${EVENT.location}`,
+    `DESCRIPTION:${EVENT.description}`,
+    'END:VEVENT',
+    'END:VCALENDAR',
+  ].join('\r\n')
+}
+
+function handleAppleCalendar() {
+  const blob = new Blob([generateIcsContent()], { type: 'text/calendar' })
+  const url = URL.createObjectURL(blob)
+  const a = document.createElement('a')
+  a.href = url
+  a.download = 'your-wedding.ics'
+  a.click()
+  URL.revokeObjectURL(url)
+}
+
+function CalendarLinks() {
+  return (
+    <div style={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      gap: '12px',
+      padding: '24px 16px',
+      backgroundColor: '#000',
+    }}>
+      <p style={{
+        color: '#c9b58a',
+        fontFamily: '"Cormorant Garamond", Georgia, serif',
+        fontSize: '18px',
+        letterSpacing: '0.15em',
+        textTransform: 'uppercase',
+        margin: 0,
+      }}>
+        Add to Calendar
+      </p>
+
+      <div style={{
+        display: 'flex',
+        gap: '16px',
+        flexWrap: 'wrap',
+        justifyContent: 'center',
+      }}>
+        <a
+          href={googleCalendarUrl()}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={linkStyle}
+        >
+          <GoogleIcon />
+          Google
+        </a>
+
+        <button
+          onClick={handleAppleCalendar}
+          style={linkStyle}
+        >
+          <AppleIcon />
+          Apple
+        </button>
+
+        <a
+          href={outlookCalendarUrl()}
+          target="_blank"
+          rel="noopener noreferrer"
+          style={linkStyle}
+        >
+          <OutlookIcon />
+          Outlook
+        </a>
+      </div>
+    </div>
+  )
+}
+
+const linkStyle = {
+  display: 'inline-flex',
+  alignItems: 'center',
+  gap: '8px',
+  padding: '10px 20px',
+  border: '1px solid #c9b58a',
+  borderRadius: '2px',
+  color: '#c9b58a',
+  backgroundColor: 'transparent',
+  fontFamily: '"Cormorant Garamond", Georgia, serif',
+  fontSize: '15px',
+  letterSpacing: '0.1em',
+  textDecoration: 'none',
+  cursor: 'pointer',
+  transition: 'all 0.2s',
+}
+
+function GoogleIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+      <line x1="16" y1="2" x2="16" y2="6" />
+      <line x1="8" y1="2" x2="8" y2="6" />
+      <line x1="3" y1="10" x2="21" y2="10" />
+    </svg>
+  )
+}
+
+function AppleIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor">
+      <path d="M18.71 19.5c-.83 1.24-1.71 2.45-3.05 2.47-1.34.03-1.77-.79-3.29-.79-1.53 0-2 .77-3.27.82-1.31.05-2.3-1.32-3.14-2.53C4.25 17 2.94 12.45 4.7 9.39c.87-1.52 2.43-2.48 4.12-2.51 1.28-.02 2.5.87 3.29.87.78 0 2.26-1.07 3.8-.91.65.03 2.47.26 3.64 1.98-.09.06-2.17 1.28-2.15 3.81.03 3.02 2.65 4.03 2.68 4.04-.03.07-.42 1.44-1.38 2.83M13 3.5c.73-.83 1.94-1.46 2.94-1.5.13 1.17-.34 2.35-1.04 3.19-.69.85-1.83 1.51-2.95 1.42-.15-1.15.41-2.35 1.05-3.11z" />
+    </svg>
+  )
+}
+
+function OutlookIcon() {
+  return (
+    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round">
+      <rect x="3" y="4" width="18" height="18" rx="2" ry="2" />
+      <line x1="16" y1="2" x2="16" y2="6" />
+      <line x1="8" y1="2" x2="8" y2="6" />
+      <line x1="3" y1="10" x2="21" y2="10" />
+      <path d="M8 14h.01M12 14h.01M16 14h.01M8 18h.01M12 18h.01" />
+    </svg>
+  )
+}
 
 function App() {
-  const [raveMode, setRaveMode] = useState(false)
-  const [showConfetti, setShowConfetti] = useState(false)
-  const [theme, setTheme] = useState(() => {
-    const saved = localStorage.getItem('theme')
-    return saved || 'burgundy'
-  })
-  const [darkMode, setDarkMode] = useState(() => {
-    const saved = localStorage.getItem('darkMode')
-    return saved ? JSON.parse(saved) : false
-  })
-  const [invitationFont, setInvitationFont] = useState('pinyon')
-  const location = useLocation()
-
-  // Save preferences
-  useEffect(() => {
-    localStorage.setItem('darkMode', JSON.stringify(darkMode))
-  }, [darkMode])
-
-  useEffect(() => {
-    localStorage.setItem('theme', theme)
-  }, [theme])
-
-  // Secret keyboard shortcut: press 'r' 'a' 'v' 'e' in sequence
-  useEffect(() => {
-    let keys = []
-    const secretCode = ['r', 'a', 'v', 'e']
-
-    const handleKeyDown = (e) => {
-      keys.push(e.key.toLowerCase())
-      keys = keys.slice(-4)
-      if (keys.join('') === secretCode.join('')) {
-        setRaveMode(prev => !prev)
-      }
-    }
-
-    window.addEventListener('keydown', handleKeyDown)
-    return () => window.removeEventListener('keydown', handleKeyDown)
-  }, [])
-
-  // Show confetti when rave mode activates (limited duration)
-  useEffect(() => {
-    if (raveMode) {
-      setShowConfetti(true)
-      // Confetti lasts 8 seconds max, even in rave mode
-      const timer = setTimeout(() => setShowConfetti(false), 8000)
-      return () => clearTimeout(timer)
-    }
-  }, [raveMode])
-
-  // Page transition effect
-  useEffect(() => {
-    window.scrollTo(0, 0)
-  }, [location.pathname])
-
-  const cycleTheme = () => {
-    const currentIndex = themes.indexOf(theme)
-    const nextIndex = (currentIndex + 1) % themes.length
-    setTheme(themes[nextIndex])
-  }
-
-  const particleColors = {
-    burgundy: 'rgba(114, 32, 52, 0.2)',
-    olive: 'rgba(92, 109, 73, 0.2)',
-    fall: 'rgba(180, 100, 50, 0.2)',
-    midnight: 'rgba(30, 58, 95, 0.2)',
-    rose: 'rgba(183, 110, 121, 0.2)',
-    forest: 'rgba(34, 85, 51, 0.2)'
-  }
-
   return (
-    <AuthProvider>
-    <div
-      className={`min-h-screen ${darkMode ? 'bg-gray-900' : 'bg-white'} ${raveMode ? 'rave-mode' : ''} theme-${theme} ${darkMode ? 'dark' : ''}`}
-      style={{ fontFamily: readableFont }}
-    >
-      {/* Particle Background - on non-home pages when not in rave mode */}
-      {location.pathname !== '/' && !raveMode && (
-        <ParticleBackground color={particleColors[theme]} />
-      )}
-
-      {/* Rave Mode Effects */}
-      {raveMode && <Lasers />}
-      <PartyAudio play={raveMode} />
-
-      {/* Confetti */}
-      <Confetti active={showConfetti || raveMode} />
-
-      {/* Walking Pets - on all pages except home (home has peeking pets) */}
-      {location.pathname !== '/' && <WalkingPets />}
-
-      <Navbar
-        theme={theme}
-        darkMode={darkMode}
-        onDarkModeToggle={() => setDarkMode(prev => !prev)}
-        raveMode={raveMode}
-        onRaveModeToggle={() => setRaveMode(prev => !prev)}
-        onThemeChange={(newTheme) => {
-          // Accept either a theme ID or cycle to next
-          if (newTheme && themes.includes(newTheme)) {
-            setTheme(newTheme)
-          } else {
-            const currentIndex = themes.indexOf(theme)
-            setTheme(themes[(currentIndex + 1) % themes.length])
-          }
+    <div style={{
+      margin: 0,
+      padding: 0,
+      backgroundColor: '#000',
+      minHeight: '100vh',
+    }}>
+      <img
+        src="/images/save-the-date.png"
+        alt="Save the Date - Bride & Groom - November 6, 2026"
+        style={{
+          display: 'block',
+          width: '100%',
+          maxHeight: 'calc(100vh - 100px)',
+          objectFit: 'contain',
         }}
-        onFontChange={() => {
-          const currentIndex = invitationFonts.indexOf(invitationFont)
-          setInvitationFont(invitationFonts[(currentIndex + 1) % invitationFonts.length])
-        }}
-        showFontToggle={location.pathname === '/'}
       />
-      <main className="page-transition relative z-10" key={`${location.pathname}-${theme}`}>
-        <Routes>
-          <Route path="/" element={<Home raveMode={raveMode} theme={theme} font={fontFamilies[invitationFont]} />} />
-          <Route path="/our-story" element={<OurStory theme={theme} />} />
-          <Route path="/wedding-party" element={<WeddingParty raveMode={raveMode} />} />
-          <Route path="/father-of-bride" element={<FatherOfBride />} />
-          <Route path="/details" element={<Details />} />
-          <Route path="/rsvp" element={<RSVP />} />
-          <Route path="/reception" element={<Reception raveMode={raveMode} />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/admin" element={<Admin />} />
-          <Route path="/feedback" element={<Feedback />} />
-        </Routes>
-      </main>
+      <CalendarLinks />
     </div>
-    </AuthProvider>
   )
 }
 
