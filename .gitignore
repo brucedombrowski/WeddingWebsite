@@ -82,9 +82,13 @@ temp/
 *.backup
 *.old
 
-# Photos (contain personal images)
+# Photos and personal images
 public/photos/
 public/preview.jpg
+public/images/save-the-date.png
+
+# ACME challenge files (domain-specific)
+public/.well-known/
 
 # Session/cache files
 .cache/

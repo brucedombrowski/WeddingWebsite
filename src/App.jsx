@@ -2,13 +2,16 @@
 // When ready for the full site, restore this file from git:
 //   git checkout HEAD~1 -- src/App.jsx
 
+import config from '../config.json'
+
+const wedding = config.wedding
 const EVENT = {
-  title: "Bride & Groom's Wedding",
-  date: '2026-11-06',
-  startTime: '17:00',
+  title: `${wedding.bride.firstName} & ${wedding.groom.firstName}'s Wedding`,
+  date: wedding.date,
+  startTime: wedding.time || '17:00',
   endTime: '23:00',
-  location: 'Wedding Venue Name, 123 Venue St, City, TX 12345',
-  description: 'Wedding celebration of Bride Lastname & Groom Lastname',
+  location: `${wedding.venue.ceremony.name}, ${wedding.venue.ceremony.address}`,
+  description: `Wedding celebration of ${wedding.bride.firstName} ${wedding.bride.lastName} & ${wedding.groom.firstName} ${wedding.groom.lastName}`,
 }
 
 function googleCalendarUrl() {
@@ -59,7 +62,7 @@ function handleAppleCalendar() {
   const url = URL.createObjectURL(blob)
   const a = document.createElement('a')
   a.href = url
-  a.download = 'your-wedding.ics'
+  a.download = 'wedding.ics'
   a.click()
   URL.revokeObjectURL(url)
 }
@@ -181,7 +184,7 @@ function App() {
     }}>
       <img
         src="/images/save-the-date.png"
-        alt="Save the Date - Bride & Groom - November 6, 2026"
+        alt={`Save the Date - ${wedding.bride.firstName} & ${wedding.groom.firstName} - ${wedding.date}`}
         style={{
           display: 'block',
           width: '100%',
