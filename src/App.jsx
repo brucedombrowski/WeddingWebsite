@@ -2,7 +2,51 @@
 // When ready for the full site, restore this file from git:
 //   git checkout HEAD~1 -- src/App.jsx
 
+import { useEffect } from 'react'
+import { db } from './firebase/config'
+import { collection, addDoc, serverTimestamp } from 'firebase/firestore'
 import config from '../config.json'
+
+function getDeviceInfo() {
+  const ua = navigator.userAgent
+  let device = 'Unknown'
+  let os = 'Unknown'
+  let browser = 'Unknown'
+
+  if (/iPhone/.test(ua)) device = 'iPhone'
+  else if (/iPad/.test(ua)) device = 'iPad'
+  else if (/Android/.test(ua)) device = /Mobile/.test(ua) ? 'Android Phone' : 'Android Tablet'
+  else if (/Macintosh/.test(ua)) device = 'Mac'
+  else if (/Windows/.test(ua)) device = 'Windows PC'
+  else if (/Linux/.test(ua)) device = 'Linux PC'
+
+  if (/iPhone|iPad|Macintosh/.test(ua)) {
+    const match = ua.match(/OS (\d+[_.\d]+)/)
+    os = match ? (/iPhone|iPad/.test(ua) ? 'iOS ' : 'macOS ') + match[1].replace(/_/g, '.') : (/iPhone|iPad/.test(ua) ? 'iOS' : 'macOS')
+  } else if (/Android/.test(ua)) {
+    const match = ua.match(/Android ([\d.]+)/)
+    os = match ? 'Android ' + match[1] : 'Android'
+  } else if (/Windows/.test(ua)) {
+    os = 'Windows'
+  }
+
+  if (/CriOS/.test(ua)) browser = 'Chrome (iOS)'
+  else if (/Chrome/.test(ua) && !/Edg/.test(ua)) browser = 'Chrome'
+  else if (/Safari/.test(ua) && !/Chrome/.test(ua)) browser = 'Safari'
+  else if (/Firefox/.test(ua)) browser = 'Firefox'
+  else if (/Edg/.test(ua)) browser = 'Edge'
+
+  return { device, os, browser, userAgent: ua, screenWidth: window.screen.width, screenHeight: window.screen.height }
+}
+
+function logEvent(eventType, extra = {}) {
+  addDoc(collection(db, 'analytics'), {
+    event: eventType,
+    timestamp: serverTimestamp(),
+    ...getDeviceInfo(),
+    ...extra,
+  }).catch(() => {})
+}
 
 const wedding = config.wedding
 const EVENT = {
@@ -72,6 +116,7 @@ function CalendarLinks() {
         <a
           href={window.location.origin.replace(/^https?/, 'webcal') + '/dombrowski-wedding.ics'}
           style={{...linkStyle, padding: '16px 20px', fontSize: '16px'}}
+          onClick={() => logEvent('button_click', { button: 'apple_calendar' })}
         >
           <AppleIcon />
           Apple Calendar
@@ -82,7 +127,7 @@ function CalendarLinks() {
           target="_blank"
           rel="noopener noreferrer"
           style={linkStyle}
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e) => { e.stopPropagation(); logEvent('button_click', { button: 'google_calendar' }) }}
         >
           <GoogleIcon />
           Google Calendar
@@ -93,7 +138,7 @@ function CalendarLinks() {
           target="_blank"
           rel="noopener noreferrer"
           style={linkStyle}
-          onClick={(e) => e.stopPropagation()}
+          onClick={(e) => { e.stopPropagation(); logEvent('button_click', { button: 'outlook_calendar' }) }}
         >
           <OutlookIcon />
           Outlook Calendar
@@ -154,6 +199,8 @@ function OutlookIcon() {
 }
 
 function App() {
+  useEffect(() => { logEvent('page_visit') }, [])
+
   return (
     <div style={{
       margin: 0,

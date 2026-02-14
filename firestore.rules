@@ -67,6 +67,13 @@ service cloud.firestore {
       allow write: if isAdmin();
     }
 
+    // Analytics - anyone can write, only admins can read
+    match /analytics/{eventId} {
+      allow create: if true;
+      allow read: if isAdmin();
+      allow update, delete: if false;
+    }
+
     // Default deny all other access
     match /{document=**} {
       allow read, write: if false;
