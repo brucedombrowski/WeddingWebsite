@@ -21,6 +21,7 @@ function googleCalendarUrl() {
     action: 'TEMPLATE',
     text: EVENT.title,
     dates: `${start}/${end}`,
+    ctz: 'America/Chicago',
     location: EVENT.location,
     details: EVENT.description,
   })
@@ -38,33 +39,6 @@ function outlookCalendarUrl() {
     body: EVENT.description,
   })
   return `https://outlook.live.com/calendar/0/deeplink/compose?${params}`
-}
-
-function generateIcsContent() {
-  const start = EVENT.date.replace(/-/g, '') + 'T' + EVENT.startTime.replace(':', '') + '00'
-  const end = EVENT.date.replace(/-/g, '') + 'T' + EVENT.endTime.replace(':', '') + '00'
-  return [
-    'BEGIN:VCALENDAR',
-    'VERSION:2.0',
-    'BEGIN:VEVENT',
-    `DTSTART:${start}`,
-    `DTEND:${end}`,
-    `SUMMARY:${EVENT.title}`,
-    `LOCATION:${EVENT.location}`,
-    `DESCRIPTION:${EVENT.description}`,
-    'END:VEVENT',
-    'END:VCALENDAR',
-  ].join('\r\n')
-}
-
-function handleAppleCalendar() {
-  const blob = new Blob([generateIcsContent()], { type: 'text/calendar' })
-  const url = URL.createObjectURL(blob)
-  const a = document.createElement('a')
-  a.href = url
-  a.download = 'wedding.ics'
-  a.click()
-  URL.revokeObjectURL(url)
 }
 
 function CalendarLinks() {
@@ -90,36 +64,39 @@ function CalendarLinks() {
 
       <div style={{
         display: 'flex',
-        gap: '16px',
-        flexWrap: 'wrap',
-        justifyContent: 'center',
+        flexDirection: 'column',
+        gap: '10px',
+        width: '100%',
+        maxWidth: '280px',
       }}>
+        <a
+          href={window.location.origin.replace(/^https?/, 'webcal') + '/dombrowski-wedding.ics'}
+          style={{...linkStyle, padding: '16px 20px', fontSize: '16px'}}
+        >
+          <AppleIcon />
+          Apple Calendar
+        </a>
+
         <a
           href={googleCalendarUrl()}
           target="_blank"
           rel="noopener noreferrer"
           style={linkStyle}
+          onClick={(e) => e.stopPropagation()}
         >
           <GoogleIcon />
-          Google
+          Google Calendar
         </a>
-
-        <button
-          onClick={handleAppleCalendar}
-          style={linkStyle}
-        >
-          <AppleIcon />
-          Apple
-        </button>
 
         <a
           href={outlookCalendarUrl()}
           target="_blank"
           rel="noopener noreferrer"
           style={linkStyle}
+          onClick={(e) => e.stopPropagation()}
         >
           <OutlookIcon />
-          Outlook
+          Outlook Calendar
         </a>
       </div>
     </div>
@@ -127,10 +104,12 @@ function CalendarLinks() {
 }
 
 const linkStyle = {
-  display: 'inline-flex',
+  display: 'flex',
   alignItems: 'center',
-  gap: '8px',
-  padding: '10px 20px',
+  justifyContent: 'center',
+  gap: '10px',
+  padding: '14px 20px',
+  width: '100%',
   border: '1px solid #c9b58a',
   borderRadius: '2px',
   color: '#c9b58a',

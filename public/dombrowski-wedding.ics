@@ -1,0 +1,11 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//Dombrowski Wedding//EN
+BEGIN:VEVENT
+DTSTART;TZID=America/Chicago:20261106T170000
+DTEND;TZID=America/Chicago:20261106T230000
+SUMMARY:Hilary & Bruce's Wedding
+LOCATION:The Stables on the Brazos, Fulshear, Texas
+DESCRIPTION:Wedding celebration of Hilary Brannon & Bruce Dombrowski
+END:VEVENT
+END:VCALENDAR
