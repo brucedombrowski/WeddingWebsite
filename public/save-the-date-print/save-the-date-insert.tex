@@ -1,0 +1,154 @@
+% Save the Date Insert — Print-Ready 4-up on A4
+% Compile with: xelatex save-the-date-insert.tex
+
+\documentclass[a4paper]{article}
+
+% ============================================================================
+% Packages
+% ============================================================================
+\usepackage[a4paper, margin=0pt]{geometry}
+\usepackage{fontspec}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usepackage{calc}
+
+% ============================================================================
+% Page Setup
+% ============================================================================
+\pagestyle{empty}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0pt}
+
+% ============================================================================
+% Fonts (system-installed in ~/Library/Fonts/)
+% ============================================================================
+\setmainfont{Cormorant Garamond}[
+    BoldFont = {Cormorant Garamond Bold},
+]
+\newfontfamily\ephesis{Ephesis}
+\newfontfamily\montserrat{Montserrat}
+
+% ============================================================================
+% Colors
+% ============================================================================
+\definecolor{bodytext}{HTML}{555555}
+\definecolor{subtitle}{HTML}{777777}
+
+% ============================================================================
+% Card dimensions: 4in x 6in
+% ============================================================================
+\newlength{\cardwidth}
+\newlength{\cardheight}
+\setlength{\cardwidth}{4in}
+\setlength{\cardheight}{6in}
+
+% A4 = 210mm x 297mm = 8.27in x 11.69in
+% 2 cards across: 8in < 8.27in  OK
+% 2 cards down: 12in > 11.69in  — tight, use slight scaling or trim margins
+% Centering offsets:
+\newlength{\xoffset}
+\newlength{\yoffset}
+\setlength{\xoffset}{(210mm - 2\cardwidth) / 2}
+\setlength{\yoffset}{(297mm - 2\cardheight) / 2}
+
+% ============================================================================
+% Single card content as a TikZ picture
+% ============================================================================
+\newcommand{\savethedate}{%
+\begin{tikzpicture}[x=1in, y=1in]
+    % Card boundary (invisible, defines size)
+    \useasboundingbox (0,0) rectangle (4,6);
+
+    % --- "save the date" in Ephesis ---
+    \node[anchor=center] at (2, 4.8)
+        {\ephesis\fontsize{44pt}{48pt}\selectfont save the date};
+
+    % --- Thin rule ---
+    \draw[black, line width=0.4pt] (0.8, 4.45) -- (3.2, 4.45);
+
+    % --- Names in Montserrat (small caps look via uppercase + letter spacing) ---
+    \node[anchor=center] at (2, 4.1)
+        {\montserrat\fontsize{8pt}{10pt}\selectfont
+         \addfontfeature{LetterSpace=12}%
+         HILARY BRANNON};
+    \node[anchor=center] at (2, 3.75)
+        {\montserrat\fontsize{8pt}{10pt}\selectfont
+         \addfontfeature{LetterSpace=3}%
+         \&};
+    \node[anchor=center] at (2, 3.4)
+        {\montserrat\fontsize{8pt}{10pt}\selectfont
+         \addfontfeature{LetterSpace=12}%
+         BRUCE DOMBROWSKI};
+
+    % --- Thin rule ---
+    \draw[black, line width=0.4pt] (0.8, 3.05) -- (3.2, 3.05);
+
+    % --- Date block ---
+    \node[anchor=center] at (2, 2.65)
+        {\montserrat\fontsize{9pt}{11pt}\selectfont
+         \addfontfeature{LetterSpace=10}%
+         NOVEMBER};
+    \node[anchor=center] at (2, 2.05)
+        {\fontsize{48pt}{48pt}\selectfont\bfseries 6};
+    \node[anchor=center] at (2, 1.55)
+        {\montserrat\fontsize{9pt}{11pt}\selectfont
+         \addfontfeature{LetterSpace=10}%
+         2026};
+
+    % --- QR Code ---
+    \node[anchor=center] at (2, 0.85)
+        {\includegraphics[width=0.6in]{qrcode.png}};
+
+    % --- QR subtitle ---
+    \node[anchor=center, text=subtitle] at (2, 0.35)
+        {\itshape\fontsize{7pt}{9pt}\selectfont
+         add to your calendar \& more details};
+
+\end{tikzpicture}%
+}
+
+% ============================================================================
+% Document
+% ============================================================================
+\begin{document}
+
+\begin{tikzpicture}[remember picture, overlay]
+    % Reference from top-left of page
+    \coordinate (origin) at ([xshift=\xoffset, yshift=-\yoffset] current page.north west);
+
+    % --- Card 1: top-left ---
+    \node[anchor=north west, inner sep=0pt] at (origin) {\savethedate};
+
+    % --- Card 2: top-right ---
+    \node[anchor=north west, inner sep=0pt] at ([xshift=\cardwidth] origin) {\savethedate};
+
+    % --- Card 3: bottom-left ---
+    \node[anchor=north west, inner sep=0pt] at ([yshift=-\cardheight] origin) {\savethedate};
+
+    % --- Card 4: bottom-right ---
+    \node[anchor=north west, inner sep=0pt] at ([xshift=\cardwidth, yshift=-\cardheight] origin) {\savethedate};
+
+    % --- Dashed cut guides ---
+    \coordinate (TL) at (origin);
+    \coordinate (TR) at ([xshift=2\cardwidth] origin);
+    \coordinate (BL) at ([yshift=-2\cardheight] origin);
+    \coordinate (BR) at ([xshift=2\cardwidth, yshift=-2\cardheight] origin);
+    \coordinate (TM) at ([xshift=\cardwidth] origin);
+    \coordinate (BM) at ([xshift=\cardwidth, yshift=-2\cardheight] origin);
+    \coordinate (ML) at ([yshift=-\cardheight] origin);
+    \coordinate (MR) at ([xshift=2\cardwidth, yshift=-\cardheight] origin);
+
+    % Vertical center cut
+    \draw[dashed, gray, line width=0.3pt] (TM) -- (BM);
+    % Horizontal center cut
+    \draw[dashed, gray, line width=0.3pt] (ML) -- (MR);
+
+    % Outer border cut guides (optional — extends slightly beyond cards)
+    \draw[dashed, gray, line width=0.3pt]
+        ([xshift=-3mm] TL) -- ([xshift=3mm] TR) --
+        ([xshift=3mm] BR) -- ([xshift=-3mm] BL) -- cycle;
+
+\end{tikzpicture}
+
+\end{document}
