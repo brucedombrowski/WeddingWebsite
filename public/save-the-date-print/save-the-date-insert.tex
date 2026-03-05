@@ -1,12 +1,12 @@
-% Save the Date Insert — Print-Ready 4-up on A4
+% Save the Date Insert — Print-Ready 4-up on US Letter (Borderless)
 % Compile with: xelatex save-the-date-insert.tex
 
-\documentclass[a4paper]{article}
+\documentclass[letterpaper]{article}
 
 % ============================================================================
 % Packages
 % ============================================================================
-\usepackage[a4paper, margin=0pt]{geometry}
+\usepackage[letterpaper, margin=0pt]{geometry}
 \usepackage{fontspec}
 \usepackage{graphicx}
 \usepackage{xcolor}
@@ -30,21 +30,15 @@
 \newfontfamily\montserrat{Montserrat}
 
 % ============================================================================
-% Colors
-% ============================================================================
-\definecolor{bodytext}{HTML}{555555}
-\definecolor{subtitle}{HTML}{777777}
-
-% ============================================================================
-% Card dimensions: A6 = 105mm x 148.5mm (exactly 1/4 of A4)
-% No side trimming needed — just one vertical + one horizontal cut
+% Card dimensions: exactly 1/4 of US Letter (4.25in x 5.5in)
+% Fold in half twice — no trimming needed
 % ============================================================================
 \newlength{\cardwidth}
 \newlength{\cardheight}
-\setlength{\cardwidth}{105mm}
-\setlength{\cardheight}{148.5mm}
+\setlength{\cardwidth}{4.25in}   % 107.95mm
+\setlength{\cardheight}{5.5in}   % 139.7mm
 
-% No centering offsets needed — cards tile exactly to A4
+% Cards tile exactly to letter — no offsets
 \newlength{\xoffset}
 \newlength{\yoffset}
 \setlength{\xoffset}{0pt}
@@ -55,55 +49,54 @@
 % ============================================================================
 \newcommand{\savethedate}{%
 \begin{tikzpicture}[x=1mm, y=1mm]
-    % Card boundary: 105mm x 148.5mm (A6)
-    % Content shifted up to stay clear of ~5mm unprintable printer margins
-    \useasboundingbox (0,0) rectangle (105,148.5);
+    % Card boundary: 107.95mm x 139.7mm (1/4 US Letter)
+    \useasboundingbox (0,0) rectangle (107.95,139.7);
 
-    % Content vertically centered: 19.25mm margin top and bottom
-    % Title at 129.25, subtitle at 19.25, content spans 110mm
+    % Content vertically centered: ~15mm margin top and bottom
+    % Title at 124.7, subtitle at 15, content spans ~110mm
 
     % --- "save the date" in Ephesis ---
-    \node[anchor=center] at (52.5, 129)
+    \node[anchor=center] at (53.975, 124)
         {\ephesis\fontsize{40pt}{44pt}\selectfont save the date};
 
     % --- Thin rule ---
-    \draw[black, line width=0.4pt] (20, 119) -- (85, 119);
+    \draw[black, line width=0.4pt] (22, 114) -- (86, 114);
 
     % --- Names in Montserrat ---
-    \node[anchor=center] at (52.5, 110)
+    \node[anchor=center] at (53.975, 105)
         {\montserrat\fontsize{8pt}{10pt}\selectfont
          \addfontfeature{LetterSpace=12}%
          HILARY BRANNON};
-    \node[anchor=center] at (52.5, 101)
+    \node[anchor=center] at (53.975, 96)
         {\montserrat\fontsize{8pt}{10pt}\selectfont
          \addfontfeature{LetterSpace=3}%
          \&};
-    \node[anchor=center] at (52.5, 92)
+    \node[anchor=center] at (53.975, 87)
         {\montserrat\fontsize{8pt}{10pt}\selectfont
          \addfontfeature{LetterSpace=12}%
          BRUCE DOMBROWSKI};
 
     % --- Thin rule ---
-    \draw[black, line width=0.4pt] (20, 83) -- (85, 83);
+    \draw[black, line width=0.4pt] (22, 78) -- (86, 78);
 
     % --- Date block ---
-    \node[anchor=center] at (52.5, 73)
+    \node[anchor=center] at (53.975, 68)
         {\montserrat\fontsize{9pt}{11pt}\selectfont
          \addfontfeature{LetterSpace=10}%
          NOVEMBER};
-    \node[anchor=center] at (52.5, 57)
+    \node[anchor=center] at (53.975, 52)
         {\fontsize{44pt}{44pt}\selectfont\bfseries 6};
-    \node[anchor=center] at (52.5, 44)
+    \node[anchor=center] at (53.975, 39)
         {\montserrat\fontsize{9pt}{11pt}\selectfont
          \addfontfeature{LetterSpace=10}%
          2026};
 
     % --- QR Code ---
-    \node[anchor=center] at (52.5, 29)
+    \node[anchor=center] at (53.975, 25)
         {\includegraphics[width=15mm]{qrcode.png}};
 
     % --- QR subtitle ---
-    \node[anchor=center] at (52.5, 19)
+    \node[anchor=center] at (53.975, 15)
         {\montserrat\fontsize{7.5pt}{10pt}\selectfont
          \addfontfeature{LetterSpace=8}%
          ADD TO YOUR CALENDAR \& MORE DETAILS};
@@ -131,8 +124,6 @@
 
     % --- Card 4: bottom-right ---
     \node[anchor=north west, inner sep=0pt] at ([xshift=\cardwidth, yshift=-\cardheight] origin) {\savethedate};
-
-    % No cut guides needed — just cut A4 in half twice
 
 \end{tikzpicture}
 
