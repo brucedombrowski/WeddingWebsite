@@ -52,51 +52,51 @@
     % Card boundary: 107.95mm x 139.7mm (1/4 US Letter)
     \useasboundingbox (0,0) rectangle (107.95,139.7);
 
-    % Content vertically centered: ~15mm margin top and bottom
-    % Title at 124.7, subtitle at 15, content spans ~110mm
+    % Content vertically centered within 139.7mm card
+    % 12mm top/bottom margins, content spans ~116mm
 
     % --- "save the date" in Ephesis ---
-    \node[anchor=center] at (53.975, 124)
+    \node[anchor=center] at (53.975, 127)
         {\ephesis\fontsize{40pt}{44pt}\selectfont save the date};
 
     % --- Thin rule ---
-    \draw[black, line width=0.4pt] (22, 114) -- (86, 114);
+    \draw[black, line width=0.4pt] (22, 118) -- (86, 118);
 
     % --- Names in Montserrat ---
-    \node[anchor=center] at (53.975, 105)
+    \node[anchor=center] at (53.975, 109)
         {\montserrat\fontsize{8pt}{10pt}\selectfont
          \addfontfeature{LetterSpace=12}%
          HILARY BRANNON};
-    \node[anchor=center] at (53.975, 96)
+    \node[anchor=center] at (53.975, 101)
         {\montserrat\fontsize{8pt}{10pt}\selectfont
          \addfontfeature{LetterSpace=3}%
          \&};
-    \node[anchor=center] at (53.975, 87)
+    \node[anchor=center] at (53.975, 93)
         {\montserrat\fontsize{8pt}{10pt}\selectfont
          \addfontfeature{LetterSpace=12}%
          BRUCE DOMBROWSKI};
 
     % --- Thin rule ---
-    \draw[black, line width=0.4pt] (22, 78) -- (86, 78);
+    \draw[black, line width=0.4pt] (22, 84) -- (86, 84);
 
     % --- Date block ---
-    \node[anchor=center] at (53.975, 68)
+    \node[anchor=center] at (53.975, 75)
         {\montserrat\fontsize{9pt}{11pt}\selectfont
          \addfontfeature{LetterSpace=10}%
          NOVEMBER};
-    \node[anchor=center] at (53.975, 52)
+    \node[anchor=center] at (53.975, 59)
         {\fontsize{44pt}{44pt}\selectfont\bfseries 6};
-    \node[anchor=center] at (53.975, 39)
+    \node[anchor=center] at (53.975, 46)
         {\montserrat\fontsize{9pt}{11pt}\selectfont
          \addfontfeature{LetterSpace=10}%
          2026};
 
     % --- QR Code ---
-    \node[anchor=center] at (53.975, 25)
+    \node[anchor=center] at (53.975, 30)
         {\includegraphics[width=15mm]{qrcode.png}};
 
     % --- QR subtitle ---
-    \node[anchor=center] at (53.975, 15)
+    \node[anchor=center] at (53.975, 18)
         {\montserrat\fontsize{7.5pt}{10pt}\selectfont
          \addfontfeature{LetterSpace=8}%
          ADD TO YOUR CALENDAR \& MORE DETAILS};
