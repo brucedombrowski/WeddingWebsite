@@ -56,51 +56,52 @@
 \newcommand{\savethedate}{%
 \begin{tikzpicture}[x=1mm, y=1mm]
     % Card boundary: 105mm x 148.5mm (A6)
+    % Content shifted up to stay clear of ~5mm unprintable printer margins
     \useasboundingbox (0,0) rectangle (105,148.5);
 
     % --- "save the date" in Ephesis ---
-    \node[anchor=center] at (52.5, 125)
+    \node[anchor=center] at (52.5, 130)
         {\ephesis\fontsize{40pt}{44pt}\selectfont save the date};
 
     % --- Thin rule ---
-    \draw[black, line width=0.4pt] (20, 115) -- (85, 115);
+    \draw[black, line width=0.4pt] (20, 120) -- (85, 120);
 
     % --- Names in Montserrat ---
-    \node[anchor=center] at (52.5, 106)
+    \node[anchor=center] at (52.5, 111)
         {\montserrat\fontsize{8pt}{10pt}\selectfont
          \addfontfeature{LetterSpace=12}%
          HILARY BRANNON};
-    \node[anchor=center] at (52.5, 97)
+    \node[anchor=center] at (52.5, 102)
         {\montserrat\fontsize{8pt}{10pt}\selectfont
          \addfontfeature{LetterSpace=3}%
          \&};
-    \node[anchor=center] at (52.5, 88)
+    \node[anchor=center] at (52.5, 93)
         {\montserrat\fontsize{8pt}{10pt}\selectfont
          \addfontfeature{LetterSpace=12}%
          BRUCE DOMBROWSKI};
 
     % --- Thin rule ---
-    \draw[black, line width=0.4pt] (20, 79) -- (85, 79);
+    \draw[black, line width=0.4pt] (20, 84) -- (85, 84);
 
     % --- Date block ---
-    \node[anchor=center] at (52.5, 69)
+    \node[anchor=center] at (52.5, 74)
         {\montserrat\fontsize{9pt}{11pt}\selectfont
          \addfontfeature{LetterSpace=10}%
          NOVEMBER};
-    \node[anchor=center] at (52.5, 53)
+    \node[anchor=center] at (52.5, 58)
         {\fontsize{44pt}{44pt}\selectfont\bfseries 6};
-    \node[anchor=center] at (52.5, 40)
+    \node[anchor=center] at (52.5, 45)
         {\montserrat\fontsize{9pt}{11pt}\selectfont
          \addfontfeature{LetterSpace=10}%
          2026};
 
     % --- QR Code ---
-    \node[anchor=center] at (52.5, 23)
+    \node[anchor=center] at (52.5, 28)
         {\includegraphics[width=15mm]{qrcode.png}};
 
-    % --- QR subtitle ---
-    \node[anchor=center, text=subtitle] at (52.5, 10)
-        {\itshape\fontsize{9pt}{11pt}\selectfont
+    % --- QR subtitle in Montserrat (heavier weight for inkjet clarity) ---
+    \node[anchor=center, text=subtitle] at (52.5, 15)
+        {\montserrat\fontsize{8pt}{10pt}\selectfont
          add to your calendar \& more details};
 
 \end{tikzpicture}%
