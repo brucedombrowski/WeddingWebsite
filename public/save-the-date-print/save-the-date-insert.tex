@@ -114,9 +114,8 @@
 \begin{document}
 
 \begin{tikzpicture}[remember picture, overlay]
-    % Reference from top-left of page, shifted 4mm up to compensate for
-    % HP Envy 5055 having a larger unprintable bottom margin than top
-    \coordinate (origin) at ([xshift=\xoffset, yshift=-\yoffset+4mm] current page.north west);
+    % Reference from top-left of page
+    \coordinate (origin) at ([xshift=\xoffset, yshift=-\yoffset] current page.north west);
 
     % --- Card 1: top-left ---
     \node[anchor=north west, inner sep=0pt] at (origin) {\savethedate};
@@ -124,11 +123,11 @@
     % --- Card 2: top-right ---
     \node[anchor=north west, inner sep=0pt] at ([xshift=\cardwidth] origin) {\savethedate};
 
-    % --- Card 3: bottom-left ---
-    \node[anchor=north west, inner sep=0pt] at ([yshift=-\cardheight] origin) {\savethedate};
+    % --- Card 3: bottom-left (shifted 4mm up to match top cards' apparent spacing) ---
+    \node[anchor=north west, inner sep=0pt] at ([yshift=-\cardheight+4mm] origin) {\savethedate};
 
-    % --- Card 4: bottom-right ---
-    \node[anchor=north west, inner sep=0pt] at ([xshift=\cardwidth, yshift=-\cardheight] origin) {\savethedate};
+    % --- Card 4: bottom-right (shifted 4mm up to match top cards' apparent spacing) ---
+    \node[anchor=north west, inner sep=0pt] at ([xshift=\cardwidth, yshift=-\cardheight+4mm] origin) {\savethedate};
 
     % No cut guides needed — just cut A4 in half twice
 
