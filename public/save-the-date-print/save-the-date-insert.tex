@@ -1,130 +1,118 @@
-% Save the Date Insert — Print-Ready 4-up on US Letter (Borderless)
-% Compile with: xelatex save-the-date-insert.tex
+% Save the Date — Envelope Insert (4-up on US Letter)
+% Compile: xelatex save-the-date-insert.tex
+%
+% Print settings:
+%   Paper:   US Letter 8.5x11 (borderless if available)
+%   Scale:   100% / Actual Size
+%   Quality: Best
+%   Color:   Black Ink Only / Grayscale
+%   Stock:   200gsm / 75lb ivory cardstock
+%
+% After printing, fold in half twice to produce 4 identical cards.
 
 \documentclass[letterpaper]{article}
 
-% ============================================================================
-% Packages
-% ============================================================================
 \usepackage[letterpaper, margin=0pt]{geometry}
 \usepackage{fontspec}
 \usepackage{graphicx}
-\usepackage{xcolor}
 \usepackage{tikz}
-\usepackage{calc}
 
-% ============================================================================
-% Page Setup
-% ============================================================================
 \pagestyle{empty}
 \setlength{\parindent}{0pt}
 \setlength{\parskip}{0pt}
 
 % ============================================================================
-% Fonts (system-installed in ~/Library/Fonts/)
+% Fonts — installed in ~/Library/Fonts/ (Google Fonts)
 % ============================================================================
-\setmainfont{Cormorant Garamond}[
-    BoldFont = {Cormorant Garamond Bold},
-]
+
+\setmainfont{Cormorant Garamond}[BoldFont = {Cormorant Garamond Bold}]
 \newfontfamily\ephesis{Ephesis}
 \newfontfamily\montserrat{Montserrat}
 
 % ============================================================================
-% Card dimensions: exactly 1/4 of US Letter (4.25in x 5.5in)
-% Fold in half twice — no trimming needed
+% Card layout — each card is exactly 1/4 of US Letter
 % ============================================================================
-\newlength{\cardwidth}
-\newlength{\cardheight}
-\setlength{\cardwidth}{4.25in}   % 107.95mm
-\setlength{\cardheight}{5.5in}   % 139.7mm
+%   US Letter = 8.5in x 11in = 215.9mm x 279.4mm
+%   Card      = 4.25in x 5.5in = 107.95mm x 139.7mm
+%   Center X  = 53.975mm
 
-% Cards tile exactly to letter — no offsets
-\newlength{\xoffset}
-\newlength{\yoffset}
-\setlength{\xoffset}{0pt}
-\setlength{\yoffset}{0pt}
+\newlength{\cardW}\setlength{\cardW}{4.25in}
+\newlength{\cardH}\setlength{\cardH}{5.5in}
 
 % ============================================================================
-% Single card content as a TikZ picture
+% Card content
 % ============================================================================
+%   Vertical layout (y from bottom of card):
+%     127mm  "save the date"     (Ephesis 40pt)
+%     118mm  ─── rule ───
+%     109mm  HILARY BRANNON      (Montserrat 8pt, letterspaced)
+%     101mm  &
+%      93mm  BRUCE DOMBROWSKI
+%      84mm  ─── rule ───
+%      75mm  NOVEMBER            (Montserrat 9pt, letterspaced)
+%      59mm  6                   (Cormorant Garamond Bold 44pt)
+%      46mm  2026
+%      30mm  [QR code]           (15mm wide, links to dombrowski.wedding)
+%      18mm  ADD TO YOUR CALENDAR & MORE DETAILS
+
+\newcommand{\cardcenter}{53.975}
+\newcommand{\ruleleft}{22}
+\newcommand{\ruleright}{86}
+
 \newcommand{\savethedate}{%
 \begin{tikzpicture}[x=1mm, y=1mm]
-    % Card boundary: 107.95mm x 139.7mm (1/4 US Letter)
     \useasboundingbox (0,0) rectangle (107.95,139.7);
 
-    % Content vertically centered within 139.7mm card
-    % 12mm top/bottom margins, content spans ~116mm
-
-    % --- "save the date" in Ephesis ---
-    \node[anchor=center] at (53.975, 127)
+    % Title
+    \node[anchor=center] at (\cardcenter, 127)
         {\ephesis\fontsize{40pt}{44pt}\selectfont save the date};
 
-    % --- Thin rule ---
-    \draw[black, line width=0.4pt] (22, 118) -- (86, 118);
+    \draw[black, line width=0.4pt] (\ruleleft, 118) -- (\ruleright, 118);
 
-    % --- Names in Montserrat ---
-    \node[anchor=center] at (53.975, 109)
+    % Names
+    \node[anchor=center] at (\cardcenter, 109)
         {\montserrat\fontsize{8pt}{10pt}\selectfont
-         \addfontfeature{LetterSpace=12}%
-         HILARY BRANNON};
-    \node[anchor=center] at (53.975, 101)
+         \addfontfeature{LetterSpace=12}HILARY BRANNON};
+    \node[anchor=center] at (\cardcenter, 101)
         {\montserrat\fontsize{8pt}{10pt}\selectfont
-         \addfontfeature{LetterSpace=3}%
-         \&};
-    \node[anchor=center] at (53.975, 93)
+         \addfontfeature{LetterSpace=3}\&};
+    \node[anchor=center] at (\cardcenter, 93)
         {\montserrat\fontsize{8pt}{10pt}\selectfont
-         \addfontfeature{LetterSpace=12}%
-         BRUCE DOMBROWSKI};
+         \addfontfeature{LetterSpace=12}BRUCE DOMBROWSKI};
 
-    % --- Thin rule ---
-    \draw[black, line width=0.4pt] (22, 84) -- (86, 84);
+    \draw[black, line width=0.4pt] (\ruleleft, 84) -- (\ruleright, 84);
 
-    % --- Date block ---
-    \node[anchor=center] at (53.975, 75)
+    % Date
+    \node[anchor=center] at (\cardcenter, 75)
         {\montserrat\fontsize{9pt}{11pt}\selectfont
-         \addfontfeature{LetterSpace=10}%
-         NOVEMBER};
-    \node[anchor=center] at (53.975, 59)
+         \addfontfeature{LetterSpace=10}NOVEMBER};
+    \node[anchor=center] at (\cardcenter, 59)
         {\fontsize{44pt}{44pt}\selectfont\bfseries 6};
-    \node[anchor=center] at (53.975, 46)
+    \node[anchor=center] at (\cardcenter, 46)
         {\montserrat\fontsize{9pt}{11pt}\selectfont
-         \addfontfeature{LetterSpace=10}%
-         2026};
+         \addfontfeature{LetterSpace=10}2026};
 
-    % --- QR Code ---
-    \node[anchor=center] at (53.975, 30)
+    % QR code
+    \node[anchor=center] at (\cardcenter, 30)
         {\includegraphics[width=15mm]{qrcode.png}};
 
-    % --- QR subtitle ---
-    \node[anchor=center] at (53.975, 18)
+    % Subtitle
+    \node[anchor=center] at (\cardcenter, 18)
         {\montserrat\fontsize{7.5pt}{10pt}\selectfont
-         \addfontfeature{LetterSpace=8}%
-         ADD TO YOUR CALENDAR \& MORE DETAILS};
-
+         \addfontfeature{LetterSpace=8}ADD TO YOUR CALENDAR \& MORE DETAILS};
 \end{tikzpicture}%
 }
 
 % ============================================================================
-% Document
+% Page layout — 2x2 grid, no offsets (cards tile exactly to letter)
 % ============================================================================
+
 \begin{document}
-
 \begin{tikzpicture}[remember picture, overlay]
-    % Reference from top-left of page
-    \coordinate (origin) at ([xshift=\xoffset, yshift=-\yoffset] current page.north west);
-
-    % --- Card 1: top-left ---
-    \node[anchor=north west, inner sep=0pt] at (origin) {\savethedate};
-
-    % --- Card 2: top-right ---
-    \node[anchor=north west, inner sep=0pt] at ([xshift=\cardwidth] origin) {\savethedate};
-
-    % --- Card 3: bottom-left ---
-    \node[anchor=north west, inner sep=0pt] at ([yshift=-\cardheight] origin) {\savethedate};
-
-    % --- Card 4: bottom-right ---
-    \node[anchor=north west, inner sep=0pt] at ([xshift=\cardwidth, yshift=-\cardheight] origin) {\savethedate};
-
+    \coordinate (O) at (current page.north west);
+    \node[anchor=north west, inner sep=0pt] at (O)                                {\savethedate};
+    \node[anchor=north west, inner sep=0pt] at ([xshift=\cardW]          O)       {\savethedate};
+    \node[anchor=north west, inner sep=0pt] at ([yshift=-\cardH]         O)       {\savethedate};
+    \node[anchor=north west, inner sep=0pt] at ([xshift=\cardW, yshift=-\cardH] O){\savethedate};
 \end{tikzpicture}
-
 \end{document}
