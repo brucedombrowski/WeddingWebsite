@@ -36,73 +36,71 @@
 \definecolor{subtitle}{HTML}{777777}
 
 % ============================================================================
-% Card dimensions: 4in x 6in
+% Card dimensions: A6 = 105mm x 148.5mm (exactly 1/4 of A4)
+% No side trimming needed — just one vertical + one horizontal cut
 % ============================================================================
 \newlength{\cardwidth}
 \newlength{\cardheight}
-\setlength{\cardwidth}{4in}
-\setlength{\cardheight}{6in}
+\setlength{\cardwidth}{105mm}
+\setlength{\cardheight}{148.5mm}
 
-% A4 = 210mm x 297mm = 8.27in x 11.69in
-% 2 cards across: 8in < 8.27in  OK
-% 2 cards down: 12in > 11.69in  — tight, use slight scaling or trim margins
-% Centering offsets:
+% No centering offsets needed — cards tile exactly to A4
 \newlength{\xoffset}
 \newlength{\yoffset}
-\setlength{\xoffset}{(210mm - 2\cardwidth) / 2}
-\setlength{\yoffset}{(297mm - 2\cardheight) / 2}
+\setlength{\xoffset}{0pt}
+\setlength{\yoffset}{0pt}
 
 % ============================================================================
 % Single card content as a TikZ picture
 % ============================================================================
 \newcommand{\savethedate}{%
-\begin{tikzpicture}[x=1in, y=1in]
-    % Card boundary (invisible, defines size)
-    \useasboundingbox (0,0) rectangle (4,6);
+\begin{tikzpicture}[x=1mm, y=1mm]
+    % Card boundary: 105mm x 148.5mm (A6)
+    \useasboundingbox (0,0) rectangle (105,148.5);
 
     % --- "save the date" in Ephesis ---
-    \node[anchor=center] at (2, 4.8)
-        {\ephesis\fontsize{44pt}{48pt}\selectfont save the date};
+    \node[anchor=center] at (52.5, 125)
+        {\ephesis\fontsize{40pt}{44pt}\selectfont save the date};
 
     % --- Thin rule ---
-    \draw[black, line width=0.4pt] (0.8, 4.45) -- (3.2, 4.45);
+    \draw[black, line width=0.4pt] (20, 115) -- (85, 115);
 
-    % --- Names in Montserrat (small caps look via uppercase + letter spacing) ---
-    \node[anchor=center] at (2, 4.1)
+    % --- Names in Montserrat ---
+    \node[anchor=center] at (52.5, 106)
         {\montserrat\fontsize{8pt}{10pt}\selectfont
          \addfontfeature{LetterSpace=12}%
          HILARY BRANNON};
-    \node[anchor=center] at (2, 3.75)
+    \node[anchor=center] at (52.5, 97)
         {\montserrat\fontsize{8pt}{10pt}\selectfont
          \addfontfeature{LetterSpace=3}%
          \&};
-    \node[anchor=center] at (2, 3.4)
+    \node[anchor=center] at (52.5, 88)
         {\montserrat\fontsize{8pt}{10pt}\selectfont
          \addfontfeature{LetterSpace=12}%
          BRUCE DOMBROWSKI};
 
     % --- Thin rule ---
-    \draw[black, line width=0.4pt] (0.8, 3.05) -- (3.2, 3.05);
+    \draw[black, line width=0.4pt] (20, 79) -- (85, 79);
 
     % --- Date block ---
-    \node[anchor=center] at (2, 2.65)
+    \node[anchor=center] at (52.5, 69)
         {\montserrat\fontsize{9pt}{11pt}\selectfont
          \addfontfeature{LetterSpace=10}%
          NOVEMBER};
-    \node[anchor=center] at (2, 2.05)
-        {\fontsize{48pt}{48pt}\selectfont\bfseries 6};
-    \node[anchor=center] at (2, 1.55)
+    \node[anchor=center] at (52.5, 53)
+        {\fontsize{44pt}{44pt}\selectfont\bfseries 6};
+    \node[anchor=center] at (52.5, 40)
         {\montserrat\fontsize{9pt}{11pt}\selectfont
          \addfontfeature{LetterSpace=10}%
          2026};
 
     % --- QR Code ---
-    \node[anchor=center] at (2, 0.85)
-        {\includegraphics[width=0.6in]{qrcode.png}};
+    \node[anchor=center] at (52.5, 23)
+        {\includegraphics[width=15mm]{qrcode.png}};
 
     % --- QR subtitle ---
-    \node[anchor=center, text=subtitle] at (2, 0.35)
-        {\itshape\fontsize{7pt}{9pt}\selectfont
+    \node[anchor=center, text=subtitle] at (52.5, 10)
+        {\itshape\fontsize{9pt}{11pt}\selectfont
          add to your calendar \& more details};
 
 \end{tikzpicture}%
@@ -139,15 +137,10 @@
     \coordinate (ML) at ([yshift=-\cardheight] origin);
     \coordinate (MR) at ([xshift=2\cardwidth, yshift=-\cardheight] origin);
 
-    % Vertical center cut
+    % Vertical center cut (fold/cut line)
     \draw[dashed, gray, line width=0.3pt] (TM) -- (BM);
-    % Horizontal center cut
+    % Horizontal center cut (fold/cut line)
     \draw[dashed, gray, line width=0.3pt] (ML) -- (MR);
-
-    % Outer border cut guides (optional — extends slightly beyond cards)
-    \draw[dashed, gray, line width=0.3pt]
-        ([xshift=-3mm] TL) -- ([xshift=3mm] TR) --
-        ([xshift=3mm] BR) -- ([xshift=-3mm] BL) -- cycle;
 
 \end{tikzpicture}
 
