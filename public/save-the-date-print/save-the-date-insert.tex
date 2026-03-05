@@ -114,8 +114,9 @@
 \begin{document}
 
 \begin{tikzpicture}[remember picture, overlay]
-    % Reference from top-left of page
-    \coordinate (origin) at ([xshift=\xoffset, yshift=-\yoffset] current page.north west);
+    % Reference from top-left of page, shifted 4mm up to compensate for
+    % HP Envy 5055 having a larger unprintable bottom margin than top
+    \coordinate (origin) at ([xshift=\xoffset, yshift=-\yoffset+4mm] current page.north west);
 
     % --- Card 1: top-left ---
     \node[anchor=north west, inner sep=0pt] at (origin) {\savethedate};
