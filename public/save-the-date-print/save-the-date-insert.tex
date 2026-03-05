@@ -129,20 +129,7 @@
     % --- Card 4: bottom-right ---
     \node[anchor=north west, inner sep=0pt] at ([xshift=\cardwidth, yshift=-\cardheight] origin) {\savethedate};
 
-    % --- Dashed cut guides ---
-    \coordinate (TL) at (origin);
-    \coordinate (TR) at ([xshift=2\cardwidth] origin);
-    \coordinate (BL) at ([yshift=-2\cardheight] origin);
-    \coordinate (BR) at ([xshift=2\cardwidth, yshift=-2\cardheight] origin);
-    \coordinate (TM) at ([xshift=\cardwidth] origin);
-    \coordinate (BM) at ([xshift=\cardwidth, yshift=-2\cardheight] origin);
-    \coordinate (ML) at ([yshift=-\cardheight] origin);
-    \coordinate (MR) at ([xshift=2\cardwidth, yshift=-\cardheight] origin);
-
-    % Vertical center cut (fold/cut line)
-    \draw[dashed, gray, line width=0.3pt] (TM) -- (BM);
-    % Horizontal center cut (fold/cut line)
-    \draw[dashed, gray, line width=0.3pt] (ML) -- (MR);
+    % No cut guides needed — just cut A4 in half twice
 
 \end{tikzpicture}
 
