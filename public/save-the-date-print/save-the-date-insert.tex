@@ -59,48 +59,51 @@
     % Content shifted up to stay clear of ~5mm unprintable printer margins
     \useasboundingbox (0,0) rectangle (105,148.5);
 
+    % Content vertically centered: 19.25mm margin top and bottom
+    % Title at 129.25, subtitle at 19.25, content spans 110mm
+
     % --- "save the date" in Ephesis ---
-    \node[anchor=center] at (52.5, 128)
+    \node[anchor=center] at (52.5, 129)
         {\ephesis\fontsize{40pt}{44pt}\selectfont save the date};
 
     % --- Thin rule ---
-    \draw[black, line width=0.4pt] (20, 118) -- (85, 118);
+    \draw[black, line width=0.4pt] (20, 119) -- (85, 119);
 
     % --- Names in Montserrat ---
-    \node[anchor=center] at (52.5, 109)
+    \node[anchor=center] at (52.5, 110)
         {\montserrat\fontsize{8pt}{10pt}\selectfont
          \addfontfeature{LetterSpace=12}%
          HILARY BRANNON};
-    \node[anchor=center] at (52.5, 100)
+    \node[anchor=center] at (52.5, 101)
         {\montserrat\fontsize{8pt}{10pt}\selectfont
          \addfontfeature{LetterSpace=3}%
          \&};
-    \node[anchor=center] at (52.5, 91)
+    \node[anchor=center] at (52.5, 92)
         {\montserrat\fontsize{8pt}{10pt}\selectfont
          \addfontfeature{LetterSpace=12}%
          BRUCE DOMBROWSKI};
 
     % --- Thin rule ---
-    \draw[black, line width=0.4pt] (20, 82) -- (85, 82);
+    \draw[black, line width=0.4pt] (20, 83) -- (85, 83);
 
     % --- Date block ---
-    \node[anchor=center] at (52.5, 72)
+    \node[anchor=center] at (52.5, 73)
         {\montserrat\fontsize{9pt}{11pt}\selectfont
          \addfontfeature{LetterSpace=10}%
          NOVEMBER};
-    \node[anchor=center] at (52.5, 56)
+    \node[anchor=center] at (52.5, 57)
         {\fontsize{44pt}{44pt}\selectfont\bfseries 6};
-    \node[anchor=center] at (52.5, 43)
+    \node[anchor=center] at (52.5, 44)
         {\montserrat\fontsize{9pt}{11pt}\selectfont
          \addfontfeature{LetterSpace=10}%
          2026};
 
     % --- QR Code ---
-    \node[anchor=center] at (52.5, 28)
+    \node[anchor=center] at (52.5, 29)
         {\includegraphics[width=15mm]{qrcode.png}};
 
     % --- QR subtitle ---
-    \node[anchor=center] at (52.5, 18)
+    \node[anchor=center] at (52.5, 19)
         {\montserrat\fontsize{7.5pt}{10pt}\selectfont
          \addfontfeature{LetterSpace=8}%
          ADD TO YOUR CALENDAR \& MORE DETAILS};
@@ -123,11 +126,11 @@
     % --- Card 2: top-right ---
     \node[anchor=north west, inner sep=0pt] at ([xshift=\cardwidth] origin) {\savethedate};
 
-    % --- Card 3: bottom-left (shifted 4mm up to match top cards' apparent spacing) ---
-    \node[anchor=north west, inner sep=0pt] at ([yshift=-\cardheight+4mm] origin) {\savethedate};
+    % --- Card 3: bottom-left ---
+    \node[anchor=north west, inner sep=0pt] at ([yshift=-\cardheight] origin) {\savethedate};
 
-    % --- Card 4: bottom-right (shifted 4mm up to match top cards' apparent spacing) ---
-    \node[anchor=north west, inner sep=0pt] at ([xshift=\cardwidth, yshift=-\cardheight+4mm] origin) {\savethedate};
+    % --- Card 4: bottom-right ---
+    \node[anchor=north west, inner sep=0pt] at ([xshift=\cardwidth, yshift=-\cardheight] origin) {\savethedate};
 
     % No cut guides needed — just cut A4 in half twice
 
