@@ -99,10 +99,11 @@
     \node[anchor=center] at (52.5, 28)
         {\includegraphics[width=15mm]{qrcode.png}};
 
-    % --- QR subtitle in Montserrat (heavier weight for inkjet clarity) ---
+    % --- QR subtitle (matches NOVEMBER/2026 style) ---
     \node[anchor=center, text=subtitle] at (52.5, 15)
-        {\montserrat\fontsize{8pt}{10pt}\selectfont
-         add to your calendar \& more details};
+        {\montserrat\fontsize{7.5pt}{10pt}\selectfont
+         \addfontfeature{LetterSpace=8}%
+         ADD TO YOUR CALENDAR \& MORE DETAILS};
 
 \end{tikzpicture}%
 }
